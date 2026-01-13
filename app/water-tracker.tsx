@@ -6,6 +6,7 @@ export function useWaterTracker() {
   const [amount, setAmount] = useState<number>(8);
   const [goal, setGoal] = useState<number>(64);
   const [unit, setUnit] = useState<'oz' | 'ml'>('oz');
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
     const waterTotal = localStorage.getItem('waterTotal');
@@ -15,6 +16,8 @@ export function useWaterTracker() {
     if (waterTotal) setTotal(JSON.parse(waterTotal));
     if (waterGoal) setGoal(JSON.parse(waterGoal));
     if (savedUnit) setUnit(JSON.parse(savedUnit) as 'oz' | 'ml');
+
+    setIsHydrated(true);
   }, []);
 
   useEffect(() => {
@@ -55,5 +58,6 @@ export function useWaterTracker() {
     resetWater,
     changeWaterGoal,
     handleAmountChange,
+    isHydrated,
   };
 }

@@ -2,6 +2,21 @@
 import { useEffect, useState } from "react";
 import { useWaterTracker } from "./water-tracker";
 
+function Skeleton() {
+  return (
+    <div className="card skeleton-container">
+      {/* 1. Toggle & Goal Area */}
+      <div className="skeleton-block skeleton-top" />
+      
+      {/* 2. Bottle Area */}
+      <div className="skeleton-block skeleton-middle" />
+      
+      {/* 3. Controls & Reset Area */}
+      <div className="skeleton-block skeleton-bottom" />
+    </div>
+  );
+}
+
 export default function Home() {
   const { 
     total,
@@ -13,7 +28,8 @@ export default function Home() {
     addWater,
     resetWater,
     handleAmountChange,
-    changeWaterGoal } = useWaterTracker();
+    changeWaterGoal,
+    isHydrated } = useWaterTracker();
   const [isEditingGoal, setIsEditingGoal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [hasShownSuccess, setHasShownSuccess] = useState(false);
@@ -39,6 +55,10 @@ export default function Home() {
   const saveGoal = () => {
     setIsEditingGoal(false);
     changeWaterGoal(tempGoal);
+  }
+
+  if (!isHydrated) {
+    return <Skeleton />;
   }
 
   return (
