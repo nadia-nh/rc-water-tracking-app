@@ -1,3 +1,9 @@
+# Water Tracking
+
+<img width="480" height="640" alt="water-tracking screenshot" src="screenshot-rc-water-tracking.png" />
+
+Track your daily water intake and watch the bottle grow!
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
