@@ -1,15 +1,39 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWaterTracker } from "./water-tracker";
 
 export default function Home() {
   const { total, amount, goal, addWater, resetWater, handleAmountChange, changeWaterGoal } = useWaterTracker();
   const [isEditingGoal, setIsEditingGoal] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [hasShownSuccess, setHasShownSuccess] = useState(false);
 
   const fillPercentage = Math.min((total / goal) * 100, 100);
 
+  useEffect(() => {
+    if (!hasShownSuccess &&fillPercentage === 100 && total > 0) {
+      setShowSuccess(true);
+      setHasShownSuccess(true);
+      const timer = setTimeout(() => setShowSuccess(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [fillPercentage, total]);
+
+  const handleResetWater = () => {
+    setHasShownSuccess(false);
+    setShowSuccess(false);
+    resetWater();
+  };
+
   return (
     <div className="card">
+
+      {showSuccess && (
+        <div className="success-toast">
+          🎉 Goal Reached! Stay hydrated!
+        </div>
+      )}
+
       <h2 className="title">Stay Hydrated</h2>
       <div className="goal-container">
         <span>Goal: </span>
@@ -65,7 +89,7 @@ export default function Home() {
         </button>
       </div>
 
-      <button className="reset-btn" onClick={() => resetWater()}>
+      <button className="reset-btn" onClick={handleResetWater}>
         Reset Progress
       </button>
     </div>
