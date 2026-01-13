@@ -1,21 +1,57 @@
 "use client";
+import { useState } from "react";
 import { useWaterTracker } from "./water-tracker";
 
 export default function Home() {
-  const { total, amount, goal, addWater, resetWater, handleAmountChange } = useWaterTracker();
+  const { total, amount, goal, addWater, resetWater, handleAmountChange, changeWaterGoal } = useWaterTracker();
+  const [isEditingGoal, setIsEditingGoal] = useState(false);
+
+  const fillPercentage = Math.min((total / goal) * 100, 100);
 
   return (
     <div className="card">
       <h2 className="title">Stay Hydrated</h2>
-      <p className="goal-text">Goal: {goal}oz</p>
+      <div className="goal-container">
+        <span>Goal: </span>
+        {isEditingGoal ? (
+          <input 
+            className="goal-input-active"
+            type="number" 
+            autoFocus 
+            value={goal} 
+            onChange={(e) => changeWaterGoal(Number(e.target.value))}
+            onBlur={() => setIsEditingGoal(false)}
+            onKeyDown={(e) => e.key === 'Enter' && setIsEditingGoal(false)}
+          />
+        ) : (
+          <span 
+            className="goal-text-editable" 
+            onClick={() => setIsEditingGoal(true)}
+          >
+            {goal}
+          </span>
+        )}
+        <span>oz</span>
+      </div>
       
-      <div className="progress-circle">
-        <h1 className="total-display">{total}</h1>
-        <span className="unit">oz</span>
+      {/* The Nalgene Bottle UI */}
+      <div className="bottle-container">
+        <div className="bottle-cap"></div>
+        <div className="bottle-body">
+          {/* Measurement marks on the side */}
+          <div className="bottle-marks">
+            <span>-</span><span>-</span><span>-</span><span>-</span>
+          </div>
+          {/* The Water Fill */}
+          <div 
+            className="water-fill" 
+            style={{ height: `${fillPercentage}%` }}
+          ></div>
+          <div className="bottle-label">{total} oz</div>
+        </div>
       </div>
 
-      <div className="input-section">
-        <p className="label">Log Amount (oz)</p>
+      <div className="input-group-merged">
         <input 
           className="amount-input"
           type="number" 
@@ -24,8 +60,8 @@ export default function Home() {
           min="4"  
           onChange={(e) => handleAmountChange(Number(e.target.value))}
         />
-        <button className="log-btn" onClick={addWater}>
-          Drink +{amount}oz
+        <button className="log-btn-side" onClick={addWater}>
+          + Drink
         </button>
       </div>
 

@@ -26,29 +26,15 @@ body {
   width: 320px;
 }
 
-.progress-circle {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  border: 8px solid var(--water-light);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 1.5rem auto;
-  transition: border-color 0.3s ease;
-}
-
 input[type="number"] {
   background: #334155;
   border: none;
   color: white;
-  padding: 10px;
+  padding: 5px;
   border-radius: 8px;
   width: 60px;
   font-size: 1.1rem;
   text-align: center;
-  margin-bottom: 1rem;
 }
 
 /* Styling the number input arrows for better UX */
@@ -59,27 +45,57 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
-.input-group {
+.input-group-merged {
+  margin: 2rem auto 0 auto;
+  max-width: 260px;
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 10px;
-  margin-bottom: 1rem;
+  
+  align-items: center; 
+  justify-content: center;
 }
 
-.log-btn {
+.amount-input {
+  background: #334155;
+  border: 1px solid #475569;
+  color: white;
+  /* padding: 10px; */
+  border-radius: 12px;
+  width: 80px;
+  font-size: 1.2rem;
+  text-align: center;
+  outline: none;
+  height: 48px; 
+}
+
+.amount-input:focus {
+  border-color: var(--water-blue);
+}
+
+.log-btn-side {
   background: var(--water-blue);
   color: white;
   border: none;
-  padding: 12px 24px;
   border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
-  width: 100%;
-  transition: transform 0.1s;
+  flex: 1;
+  
+  /* Center the text inside the button vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  height: 48px;
+  transition: all 0.2s ease;
 }
 
-.log-btn:active {
+.log-btn-side:hover {
+  background-color: #2563eb;
+  filter: brightness(1.1);
+}
+
+.log-btn-side:active {
   transform: scale(0.95);
 }
 
@@ -90,4 +106,117 @@ input[type="number"]::-webkit-outer-spin-button {
   border: none;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.goal-container {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+}
+
+.goal-text-editable {
+  color: var(--water-blue);
+  font-weight: bold;
+  border-bottom: 1px dashed #475569;
+  cursor: pointer;
+  padding: 0 2px;
+  transition: border-color 0.2s;
+}
+
+.goal-text-editable:hover {
+  border-bottom-color: var(--water-blue);
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 2px;
+}
+
+.goal-input-active {
+  background: #334155;
+  border: 1px solid var(--water-blue);
+  color: white;
+  width: 50px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+  border-radius: 4px;
+  outline: none;
+}
+
+/* Hide arrows for the goal input */
+.goal-input-active::-webkit-inner-spin-button,
+.goal-input-active::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Bottle Container Layout */
+.bottle-container {
+  margin: 2rem auto;
+  width: 120px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* The Cap Section */
+.bottle-cap {
+  width: 60px;
+  height: 20px;
+  background: #334155;
+  border-radius: 4px 4px 0 0;
+  border-bottom: 4px solid #1e293b;
+}
+
+/* The Main Bottle Body */
+.bottle-body {
+  width: 100px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.05); /* Translucent plastic */
+  border: 3px solid #475569;
+  border-radius: 8px 8px 20px 20px;
+  position: relative;
+  overflow: hidden; /* Clips the water inside */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Measurement marks on the side */
+.bottle-marks {
+  position: absolute;
+  left: 8px;
+  top: 10%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.2);
+  font-family: monospace;
+  font-weight: bold;
+}
+
+/* The Liquid Logic */
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, #2563eb, var(--water-blue));
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 10px 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Text overlay on the bottle */
+.bottle-label {
+  position: relative;
+  z-index: 10;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
