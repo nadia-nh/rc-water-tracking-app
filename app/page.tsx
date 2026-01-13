@@ -7,6 +7,7 @@ export default function Home() {
   const [isEditingGoal, setIsEditingGoal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [hasShownSuccess, setHasShownSuccess] = useState(false);
+  const [tempGoal, setTempGoal] = useState(goal);
 
   const fillPercentage = Math.min((total / goal) * 100, 100);
 
@@ -25,6 +26,11 @@ export default function Home() {
     resetWater();
   };
 
+  const saveGoal = () => {
+    setIsEditingGoal(false);
+    changeWaterGoal(tempGoal);
+  }
+
   return (
     <div className="card">
 
@@ -42,15 +48,15 @@ export default function Home() {
             className="goal-input-active"
             type="number" 
             autoFocus 
-            value={goal} 
-            onChange={(e) => changeWaterGoal(Number(e.target.value))}
-            onBlur={() => setIsEditingGoal(false)}
-            onKeyDown={(e) => e.key === 'Enter' && setIsEditingGoal(false)}
+            value={tempGoal} 
+            onChange={(e) => setTempGoal(Number(e.target.value))}
+            onBlur={saveGoal}
+            onKeyDown={(e) => e.key === 'Enter' && saveGoal()}
           />
         ) : (
           <span 
             className="goal-text-editable" 
-            onClick={() => setIsEditingGoal(true)}
+            onClick={() => {setTempGoal(goal); setIsEditingGoal(true)}}
           >
             {goal}
           </span>
