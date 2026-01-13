@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useWaterTracker } from "./water-tracker";
+import Link from 'next/link';
 
 function Skeleton() {
   return (
@@ -71,13 +72,22 @@ export default function Home() {
         )
       }
 
-      <div className="unit-toggle-container">
-        <button className="unit-toggle-btn" onClick={toggleUnit}>
+      <div className="top-actions-container">
+        <Link href="/history" className="action-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" 
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          History
+        </Link>
+
+        <button className="action-btn" onClick={toggleUnit}>
           {unit.toUpperCase()}
         </button>
       </div>
 
-      <h2 className="title">Stay Hydrated</h2>
+      <h2 className="title">Stay Hydrated 💧</h2>
       <div className="goal-container">
         <span>Goal: </span>
         {isEditingGoal ? (
