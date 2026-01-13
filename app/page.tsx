@@ -3,7 +3,17 @@ import { useEffect, useState } from "react";
 import { useWaterTracker } from "./water-tracker";
 
 export default function Home() {
-  const { total, amount, goal, addWater, resetWater, handleAmountChange, changeWaterGoal } = useWaterTracker();
+  const { 
+    total,
+    amount,
+    goal,
+    step,
+    unit,
+    toggleUnit,
+    addWater,
+    resetWater,
+    handleAmountChange,
+    changeWaterGoal } = useWaterTracker();
   const [isEditingGoal, setIsEditingGoal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [hasShownSuccess, setHasShownSuccess] = useState(false);
@@ -38,7 +48,14 @@ export default function Home() {
         <div className="success-toast">
           🎉 Goal Reached! Stay hydrated!
         </div>
-      )}
+        )
+      }
+
+      <div className="unit-toggle-container">
+        <button className="unit-toggle-btn" onClick={toggleUnit}>
+          {unit.toUpperCase()}
+        </button>
+      </div>
 
       <h2 className="title">Stay Hydrated</h2>
       <div className="goal-container">
@@ -61,7 +78,7 @@ export default function Home() {
             {goal}
           </span>
         )}
-        <span>oz</span>
+        <span>{unit}</span>
       </div>
       
       {/* The Nalgene Bottle UI */}
@@ -77,7 +94,7 @@ export default function Home() {
             className="water-fill" 
             style={{ height: `${fillPercentage}%` }}
           ></div>
-          <div className="bottle-label">{total} oz</div>
+          <div className="bottle-label">{total} {unit}</div>
         </div>
       </div>
 
@@ -86,8 +103,8 @@ export default function Home() {
           className="amount-input"
           type="number" 
           value={amount} 
-          step="4" 
-          min="4"  
+          step={step}
+          min={step}
           onChange={(e) => handleAmountChange(Number(e.target.value))}
         />
         <button className="log-btn-side" onClick={addWater}>
