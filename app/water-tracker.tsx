@@ -1,17 +1,25 @@
 "use client";
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect } from 'react';
 
-type WaterRecord = {
-    amountOz: number,
-    timestamp: number,
-}
+import {
+  WaterRecord,
+  addRecord } from './types/water-record';
+
+import {
+  WaterUnit,
+  switchUnit,
+  displayAmount,
+  processInput,
+  getStep } from './types/water-unit';
 
 export function useWaterTracker() {
   const [total, setTotal] = useState<number>(0);
   const [amount, setAmount] = useState<number>(8);
   const [goal, setGoal] = useState<number>(64);
   const [records, setRecords] = useState<WaterRecord[]>([]);
-  const [unit, setUnit] = useState<'oz' | 'ml'>('oz');
+  const [unit, setUnit] = useState<WaterUnit>(WaterUnit.Oz);
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
@@ -20,14 +28,9 @@ export function useWaterTracker() {
     const savedUnit = localStorage.getItem('waterUnit');
     const records = localStorage.getItem('waterRecords');
 
-    console.log("waterTotal:", waterTotal);
-    console.log("waterGoal:", waterGoal);
-    console.log("savedUnit:", savedUnit);
-    console.log("records:", records);
-
     if (waterTotal) setTotal(JSON.parse(waterTotal));
     if (waterGoal) setGoal(JSON.parse(waterGoal));
-    if (savedUnit) setUnit(JSON.parse(savedUnit) as 'oz' | 'ml');
+    if (savedUnit) setUnit(JSON.parse(savedUnit) as WaterUnit);
     if (records) setRecords(JSON.parse(records));
 
     setIsHydrated(true);
@@ -44,11 +47,7 @@ export function useWaterTracker() {
 
   const addWater = () => {
     setTotal(prev => prev + amount);
-    let record = {
-        amountOz: unit === 'oz' ? amount : amount / 30,
-        timestamp: Date.now(),
-    }
-    setRecords(prev => [...prev, record]);
+    setRecords(prev => addRecord(prev, amount));
   };
 
   const resetWater = () => {
@@ -57,32 +56,21 @@ export function useWaterTracker() {
   };
 
   const handleAmountChange = (val: number) => {
-    setAmount(unit === 'oz' ? val : val / 30);
+    setAmount(processInput(unit, val));
   };
 
   const changeWaterGoal = (newGoal: number) => {
     if (newGoal <= 0) setGoal(0);
-    setGoal(unit === 'oz' ? newGoal : newGoal / 30);
+    setGoal(processInput(unit, newGoal));
   }
 
-  const step = unit === 'oz' ? 4 : 120;
-
-  // Helper to convert values for display
-  const displayTotal = unit === 'oz' ? total : Math.round(total * 30);
-  const displayGoal = unit === 'oz' ? goal : Math.round(goal * 30);
-  const displayAmount = unit === 'oz' ? amount : Math.round(amount * 30);
-  const displayRecords = records.map(record => ({
-    amount: unit === 'oz' ? record.amountOz : Math.round(record.amountOz * 30),
-    timestamp: record.timestamp,
-  }));
-
-  const toggleUnit = () => setUnit(prev => prev === 'oz' ? 'ml' : 'oz');
+  const toggleUnit = () => setUnit((prev: WaterUnit) => switchUnit(prev));
 
   return {
-    total : displayTotal,
-    amount : displayAmount,
-    goal : displayGoal,
-    step,
+    total : displayAmount(unit, total),
+    amount : displayAmount(unit, amount),
+    goal : displayAmount(unit, goal),
+    step : getStep(unit),
     unit,
     toggleUnit,
     addWater,
@@ -90,6 +78,6 @@ export function useWaterTracker() {
     changeWaterGoal,
     handleAmountChange,
     isHydrated,
-    records : displayRecords,
+    records,
   };
 }

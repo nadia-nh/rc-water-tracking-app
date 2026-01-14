@@ -6,13 +6,8 @@ import Link from 'next/link';
 function Skeleton() {
   return (
     <div className="card skeleton-container">
-      {/* 1. Toggle & Goal Area */}
       <div className="skeleton-block skeleton-top" />
-      
-      {/* 2. Bottle Area */}
       <div className="skeleton-block skeleton-middle" />
-      
-      {/* 3. Controls & Reset Area */}
       <div className="skeleton-block skeleton-bottom" />
     </div>
   );
@@ -31,6 +26,7 @@ export default function Home() {
     handleAmountChange,
     changeWaterGoal,
     isHydrated } = useWaterTracker();
+
   const [isEditingGoal, setIsEditingGoal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [hasShownSuccess, setHasShownSuccess] = useState(false);
@@ -39,7 +35,7 @@ export default function Home() {
   const fillPercentage = Math.min((total / goal) * 100, 100);
 
   useEffect(() => {
-    if (!hasShownSuccess &&fillPercentage === 100 && total > 0) {
+    if (!hasShownSuccess && fillPercentage === 100 && total > 0) {
       setShowSuccess(true);
       setHasShownSuccess(true);
       const timer = setTimeout(() => setShowSuccess(false), 3000);
