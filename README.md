@@ -1,6 +1,6 @@
 # Water Tracking
 
-<img width="480" height="640" alt="water-tracking screenshot" src="screenshot-rc-water-tracking.png" />
+<img width="480" height="810" alt="water-tracking screenshot" src="screenshot-rc-water-tracking.png" />
 
 Track your daily water intake and watch the bottle grow!
 
