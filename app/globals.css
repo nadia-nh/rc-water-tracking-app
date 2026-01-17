@@ -4,12 +4,15 @@
   --water-blue: #3b82f6;
   --water-light: #dbeafe;
   --bg-dark: #0f172a;
+  --card-bg: #1e293b;
+  --text-muted: #94a3b8;
+  --border-muted: #475569;
 }
 
 body {
   background-color: var(--bg-dark);
   color: white;
-  font-family: sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -19,12 +22,17 @@ body {
 
 /* 1. Main Card */
 .card {
-  background: #1e293b;
-  padding: 2rem;
+  background: var(--card-bg);
+  padding: 2.5rem;
   border-radius: 24px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
   text-align: center;
-  width: 320px;
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  position: relative;
 }
 
 /* 2. Top Action Row */
@@ -36,13 +44,17 @@ body {
 
 .action-btn {
   background: #334155;
-  border: none;
-  color: white;
-  padding: 5px;
-  border-radius: 8px;
-  width: 60px;
-  font-size: 1.1rem;
-  text-align: center;
+  border: 1px solid var(--border-muted);
+  color: var(--text-muted);
+  padding: 0.4rem 0.9rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  transition: all 0.2s;
 }
 
 /* 3. Goal Area */
@@ -55,7 +67,7 @@ body {
 .goal-text-editable {
   color: var(--water-blue);
   font-weight: bold;
-  border-bottom: 1px dashed #475569;
+  border-bottom: 1px dashed var(--border-muted);
   cursor: pointer;
 }
 
@@ -69,7 +81,7 @@ body {
   outline: none;
 }
 
-/* 4. Bottle Styles */
+/* 4. Bottle & Water Fill */
 .bottle-container {
   width: 120px;
   position: relative;
@@ -87,8 +99,8 @@ body {
   width: 100px;
   height: 200px;
   background: rgba(255, 255, 255, 0.05);
-  border: 3px solid #475569;
-  border-radius: 8px 8px 20px 20px;
+  border: 3px solid var(--border-muted);
+  border-radius: 4px 4px 20px 20px;
   position: relative;
   overflow: hidden;
   margin: 0 auto;
@@ -114,7 +126,96 @@ body {
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
 
-/* 5. Reset Button */
+/* 5. Logger & Vessel Group */
+.logger-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.glass-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.vessel-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mini-glass-btn {
+  width: 54px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 3px solid var(--border-muted);
+  border-radius: 2px 2px 12px 12px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mini-glass-btn:hover {
+  border-color: var(--water-blue);
+  transform: translateY(-2px);
+}
+
+.mini-water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--water-blue);
+  transition: height 0.3s ease-out;
+}
+
+/* 6. Navigation Arrows */
+.nav-arrow-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.nav-arrow-btn:hover:not(:disabled) {
+  color: var(--water-blue);
+  transform: scale(1.1);
+}
+
+.nav-arrow-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+/* 7. Typography & Utils */
+.amount-display {
+  min-width: 45px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.amount-display small {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
 .reset-btn {
   margin-top: 1.5rem;
   background: transparent;
@@ -122,12 +223,13 @@ body {
   border: none;
   text-decoration: underline;
   cursor: pointer;
+  margin-top: 0.5rem;
 }
 
-/* 6. Skeleton Blocks */
+/* 8. Skeletons */
 .skeleton-block {
   background-color: #334155;
-  border-radius: 16px;
+  border-radius: 1rem;
   width: 100%;
   /* Optional: subtle pulse effect */
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;

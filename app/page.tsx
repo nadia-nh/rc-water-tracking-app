@@ -1,17 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useWaterTracker } from "./water-tracker";
+import { Skeleton } from "./components/skeleton";
+import { ArrowIcon, HistoryIcon } from "./components/icons";
+import { SuccessToast } from "./components/success-toast";
 import Link from 'next/link';
-
-function Skeleton() {
-  return (
-    <div className="card skeleton-container">
-      <div className="skeleton-block skeleton-top" />
-      <div className="skeleton-block skeleton-middle" />
-      <div className="skeleton-block skeleton-bottom" />
-    </div>
-  );
-}
 
 export default function Home() {
   const { 
@@ -62,28 +55,12 @@ export default function Home() {
 
   return (
     <div className="card">
+      {showSuccess && <SuccessToast />}
 
-      {showSuccess && (
-        <div className="success-toast">
-          🎉 Goal Reached! Stay hydrated!
-        </div>
-        )
-      }
-
-      <div className="top-actions-container">
-        <Link href="/history" className="action-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" 
-            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-          History
-        </Link>
-
-        <button className="action-btn" onClick={toggleUnit}>
-          {unit.toUpperCase()}
-        </button>
-      </div>
+      <header className="top-actions-container">
+        <Link href="/history" className="action-btn"><HistoryIcon /> History</Link>
+        <button className="action-btn" onClick={toggleUnit}>{unit.toUpperCase()}</button>
+      </header>
 
       <h2 className="title">Stay Hydrated 💧</h2>
       <div className="goal-container">
@@ -126,7 +103,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="logger-container">
+      <footer className="logger-container">
         <div className="glass-selector">
           {/* Decrease Button */}
           <button 
@@ -134,7 +111,7 @@ export default function Home() {
             onClick={() => handleAmountChange(amount - step)}
             disabled={amount <= min}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <ArrowIcon direction="left" />
           </button>
 
           {/* The Glass (Action Button) */}
@@ -157,14 +134,14 @@ export default function Home() {
             onClick={() => handleAmountChange(amount + step)}
             disabled={amount >= max}
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <ArrowIcon direction="right" />
           </button>
         </div>
-      </div>
-
-      <button className="reset-btn" onClick={handleResetWater}>
-        Reset Progress
-      </button>
+      
+        <button className="reset-btn" onClick={handleResetWater}>
+          Reset Progress
+        </button>
+      </footer>
     </div>
   );
 }
