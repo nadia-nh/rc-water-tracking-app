@@ -24,3 +24,12 @@ export function processInput(unit: WaterUnit, inputAmount: number): number {
 export function getStep(unit: WaterUnit): number {
   return displayAmount(unit, 4);
 }
+
+export function getMinAmount(unit: WaterUnit): number {
+  return displayAmount(unit, 4);
+}
+
+export function getMaxAmount(unit: WaterUnit): number {
+  return displayAmount(unit, 16);
+}
+

@@ -12,7 +12,9 @@ import {
   switchUnit,
   displayAmount,
   processInput,
-  getStep } from './types/water-unit';
+  getStep,
+  getMinAmount,
+  getMaxAmount } from './types/water-unit';
 
 export function useWaterTracker() {
   const [total, setTotal] = useState<number>(0);
@@ -71,6 +73,8 @@ export function useWaterTracker() {
     amount : displayAmount(unit, amount),
     goal : displayAmount(unit, goal),
     step : getStep(unit),
+    min : getMinAmount(unit),
+    max : getMaxAmount(unit),
     unit,
     toggleUnit,
     addWater,

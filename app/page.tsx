@@ -19,6 +19,8 @@ export default function Home() {
     amount,
     goal,
     step,
+    min,
+    max,
     unit,
     toggleUnit,
     addWater,
@@ -124,18 +126,40 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="input-group-merged">
-        <input 
-          className="amount-input"
-          type="number" 
-          value={amount} 
-          step={step}
-          min={step}
-          onChange={(e) => handleAmountChange(Number(e.target.value))}
-        />
-        <button className="log-btn-side" onClick={addWater}>
-          + Drink
-        </button>
+      <div className="logger-container">
+        <div className="glass-selector">
+          {/* Decrease Button */}
+          <button 
+            className="nav-arrow-btn" 
+            onClick={() => handleAmountChange(amount - step)}
+            disabled={amount <= min}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+
+          {/* The Glass (Action Button) */}
+          <div className="vessel-group">
+            <button className="mini-glass-btn" onClick={addWater}>
+              <div 
+                className="mini-water-fill" 
+                style={{ height: `${(amount / max) * 100}%` }} 
+              />
+            </button>
+            
+            <div className="amount-display">
+              {amount} <small> {unit} </small>
+            </div>
+          </div>
+
+          {/* Increase Button */}
+          <button 
+            className="nav-arrow-btn" 
+            onClick={() => handleAmountChange(amount + step)}
+            disabled={amount >= max}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
       </div>
 
       <button className="reset-btn" onClick={handleResetWater}>

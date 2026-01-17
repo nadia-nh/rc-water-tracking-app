@@ -17,6 +17,7 @@ body {
   min-height: 100vh;
 }
 
+/* 1. Main Card */
 .card {
   background: #1e293b;
   padding: 2rem;
@@ -26,7 +27,14 @@ body {
   width: 320px;
 }
 
-input[type="number"] {
+/* 2. Top Action Row */
+.top-actions-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.action-btn {
   background: #334155;
   border: none;
   color: white;
@@ -37,68 +45,76 @@ input[type="number"] {
   text-align: center;
 }
 
-/* Styling the number input arrows for better UX */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  opacity: 1;
-  height: 30px;
-  cursor: pointer;
+/* 3. Goal Area */
+.goal-container {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  height: 24px;
 }
 
-.input-group-merged {
-  margin: 2rem auto 0 auto;
-  max-width: 260px;
-  display: flex;
-  gap: 10px;
-  
-  align-items: center; 
-  justify-content: center;
-}
-
-.amount-input {
-  background: #334155;
-  border: 1px solid #475569;
-  color: white;
-  /* padding: 10px; */
-  border-radius: 12px;
-  width: 80px;
-  font-size: 1.2rem;
-  text-align: center;
-  outline: none;
-  height: 48px; 
-}
-
-.amount-input:focus {
-  border-color: var(--water-blue);
-}
-
-.log-btn-side {
-  background: var(--water-blue);
-  color: white;
-  border: none;
-  border-radius: 12px;
+.goal-text-editable {
+  color: var(--water-blue);
   font-weight: bold;
+  border-bottom: 1px dashed #475569;
   cursor: pointer;
-  flex: 1;
-  
-  /* Center the text inside the button vertically */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  height: 48px;
-  transition: all 0.2s ease;
 }
 
-.log-btn-side:hover {
-  background-color: #2563eb;
-  filter: brightness(1.1);
+.goal-input-active {
+  background: #334155;
+  border: 1px solid var(--water-blue);
+  color: white;
+  width: 60px;
+  text-align: center;
+  border-radius: 4px;
+  outline: none;
 }
 
-.log-btn-side:active {
-  transform: scale(0.95);
+/* 4. Bottle Styles */
+.bottle-container {
+  width: 120px;
+  position: relative;
 }
 
+.bottle-cap {
+  width: 60px;
+  height: 16px;
+  background: #334155;
+  border-radius: 4px 4px 0 0;
+  margin: 0 auto;
+}
+
+.bottle-body {
+  width: 100px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 3px solid #475569;
+  border-radius: 8px 8px 20px 20px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, #2563eb, var(--water-blue));
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottle-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* 5. Reset Button */
 .reset-btn {
   margin-top: 1.5rem;
   background: transparent;
@@ -108,193 +124,7 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
-.goal-container {
-  color: #94a3b8;
-  font-size: 1.1rem;
-  margin-top: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  height: 24px;
-}
-
-.goal-text-editable {
-  color: var(--water-blue);
-  font-weight: bold;
-  border-bottom: 1px dashed #475569;
-  cursor: pointer;
-  padding: 0 2px;
-  transition: border-color 0.2s;
-}
-
-.goal-text-editable:hover {
-  border-bottom-color: var(--water-blue);
-  background: rgba(59, 130, 246, 0.1);
-  border-radius: 2px;
-}
-
-.goal-input-active {
-  background: #334155;
-  border: 1px solid var(--water-blue);
-  color: white;
-  width: 50px;
-  text-align: center;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin: 0;
-  border-radius: 4px;
-  outline: none;
-}
-
-/* Hide arrows for the goal input */
-.goal-input-active::-webkit-inner-spin-button,
-.goal-input-active::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Bottle Container Layout */
-.bottle-container {
-  margin: 2rem auto;
-  width: 120px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* The Cap Section */
-.bottle-cap {
-  width: 60px;
-  height: 20px;
-  background: #334155;
-  border-radius: 4px 4px 0 0;
-  border-bottom: 4px solid #1e293b;
-}
-
-/* The Main Bottle Body */
-.bottle-body {
-  width: 100px;
-  height: 200px;
-  background: rgba(255, 255, 255, 0.05); /* Translucent plastic */
-  border: 3px solid #475569;
-  border-radius: 8px 8px 20px 20px;
-  position: relative;
-  overflow: hidden; /* Clips the water inside */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Measurement marks on the side */
-.bottle-marks {
-  position: absolute;
-  left: 8px;
-  top: 10%;
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: rgba(255, 255, 255, 0.2);
-  font-family: monospace;
-  font-weight: bold;
-}
-
-/* The Liquid Logic */
-.water-fill {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, #2563eb, var(--water-blue));
-  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: inset 0 10px 20px rgba(255, 255, 255, 0.2);
-}
-
-/* Text overlay on the bottle */
-.bottle-label {
-  position: relative;
-  z-index: 10;
-  font-size: 1.5rem;
-  font-weight: 800;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-}
-
-.success-toast {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #10b981; /* Success Green */
-  color: white;
-  padding: 12px 24px;
-  border-radius: 50px;
-  font-weight: bold;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-  z-index: 100;
-  white-space: nowrap;
-  animation: slideDown 0.5s ease-out forwards;
-}
-
-@keyframes slideDown {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
-}
-
-/* Optional: Make the bottle glow when goal is reached */
-.bottle-body.goal-reached {
-  border-color: #10b981;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
-  transition: all 0.5s ease;
-}
-
-.unit-toggle-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: -10px;
-}
-
-.unit-toggle-btn {
-  background: #334155;
-  border: 1px solid #475569;
-  color: #94a3b8;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.unit-toggle-btn:hover {
-  color: white;
-  border-color: var(--water-blue);
-}
-
-/* Update the bottle label to accommodate the unit text */
-.bottle-label small {
-  font-size: 0.8rem;
-  opacity: 0.7;
-  margin-left: 2px;
-}
-
-
-
-.skeleton-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
+/* 6. Skeleton Blocks */
 .skeleton-block {
   background-color: #334155;
   border-radius: 16px;
@@ -319,92 +149,116 @@ input[type="number"]::-webkit-outer-spin-button {
   height: 110px;
 }
 
+.skeleton-top { height: 60px; }
+.skeleton-middle { width: 100px; height: 216px; margin: 0 auto; }
+.skeleton-bottom { height: 100px; }
+
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
 
-
-/* Container for both buttons at the top */
-.top-actions-container {
+/* Mini Glass Selector */
+.logger-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   width: 100%;
-  margin-bottom: 10px;
+  padding-top: 10px;
 }
 
-/* Common style for toggle and history buttons */
-.action-btn {
-  background: #334155;
-  border: 1px solid #475569;
-  color: #94a3b8;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  cursor: pointer;
-  text-decoration: none;
+.glass-selector {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 10px; /* Space between arrows and glass */
+  width: 100%;
+}
+
+/* Mini glass */
+.vessel-group {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between the glass and the text */
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 16px 8px 8px; /* More padding on the right for the text */
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mini-glass-btn {
+  width: 54px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 3px solid #475569;
+  border-radius: 4px 4px 12px 12px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mini-glass-btn:hover {
+  border-color: var(--water-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.mini-glass-btn:active {
+  transform: scale(0.92);
+}
+
+.mini-water-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--water-blue);
+  transition: height 0.3s ease-out;
+  box-shadow: inset 0 2px 8px rgba(255,255,255,0.3);
+}
+
+/* Navigation Arrows */
+.nav-arrow-btn {
+  background: transparent;
+  border: none;
+  color: #475569;
+  cursor: pointer;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.nav-arrow-btn:hover:not(:disabled) {
+  color: var(--water-blue);
+  transform: scale(1.2);
+}
+
+.nav-arrow-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
+.nav-arrow-btn {
+  color: var(--text-muted);
   transition: all 0.2s;
 }
 
-.action-btn:hover {
+/* Amount Display */
+.amount-display {
+  min-width: 45px; /* Keeps layout stable when numbers change */
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
   color: white;
-  border-color: var(--water-blue);
+  letter-spacing: -0.5px;
 }
 
-/* History Page Specifics */
-.history-header {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.back-link {
-  color: var(--water-blue);
-  text-decoration: none;
+.amount-display small {
+  color: var(--text-muted);
   font-size: 0.9rem;
-}
-
-.records-list {
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 5px;
-}
-
-.record-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #334155;
-}
-
-.record-info {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.record-date {
-  font-size: 0.7rem;
-  color: #94a3b8;
-}
-
-.record-time {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.record-amount {
-  color: var(--water-blue);
-  font-weight: bold;
-}
-
-.empty-text {
-  color: #475569;
-  margin-top: 40px;
+  font-weight: 400;
 }
