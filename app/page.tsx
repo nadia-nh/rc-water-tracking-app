@@ -70,7 +70,7 @@ export default function Home() {
             className="goal-input-active"
             type="number" 
             autoFocus 
-            value={tempGoal} 
+            value={tempGoal}
             onChange={(e) => setTempGoal(Number(e.target.value))}
             onBlur={saveGoal}
             onKeyDown={(e) => e.key === 'Enter' && saveGoal()}
@@ -83,7 +83,7 @@ export default function Home() {
             {goal}
           </span>
         )}
-        <span>{unit}</span>
+        <span> {unit}</span>
       </div>
       
       {/* The Nalgene Bottle UI */}

@@ -81,6 +81,13 @@ body {
   outline: none;
 }
 
+/* Hide arrows for the goal input */
+.goal-input-active::-webkit-inner-spin-button,
+.goal-input-active::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* 4. Bottle & Water Fill */
 .bottle-container {
   width: 120px;
@@ -104,6 +111,23 @@ body {
   position: relative;
   overflow: hidden;
   margin: 0 auto;
+  overflow: hidden; /* Clips the water inside */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottle-marks {
+  position: absolute;
+  left: 8px;
+  top: 10%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.2);
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .water-fill {
@@ -121,7 +145,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
@@ -207,12 +231,14 @@ body {
   min-width: 45px;
   font-size: 1.1rem;
   font-weight: 700;
+  line-height: 1;
   color: white;
+  letter-spacing: -0.5px;
 }
 
 .amount-display small {
   color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
 }
 
@@ -226,27 +252,51 @@ body {
   margin-top: 0.5rem;
 }
 
+.success-toast {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #10b981; /* Success Green */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  z-index: 100;
+  white-space: nowrap;
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 /* 8. Skeletons */
 .skeleton-block {
   background-color: #334155;
   border-radius: 1rem;
   width: 100%;
-  /* Optional: subtle pulse effect */
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* 1. Top Area (Toggle + Title + Goal) */
 .skeleton-top {
   height: 80px;
 }
 
-/* 2. Middle Area (Bottle) */
 .skeleton-middle {
   width: 120px; /* Matches bottle width */
   height: 240px; /* Matches bottle + cap height */
 }
 
-/* 3. Bottom Area (Inputs + Buttons) */
 .skeleton-bottom {
   height: 110px;
 }
@@ -349,18 +399,3 @@ body {
   transition: all 0.2s;
 }
 
-/* Amount Display */
-.amount-display {
-  min-width: 45px; /* Keeps layout stable when numbers change */
-  font-size: 1.1rem;
-  font-weight: 700;
-  line-height: 1;
-  color: white;
-  letter-spacing: -0.5px;
-}
-
-.amount-display small {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  font-weight: 400;
-}
