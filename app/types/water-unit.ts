@@ -33,3 +33,6 @@ export function getMaxAmount(unit: WaterUnit): number {
   return displayAmount(unit, 16);
 }
 
+export function getSwitchUnitLabel(unit: WaterUnit): string {
+  return unit === WaterUnit.Oz ? 'Oz to ml' : 'Ml to oz';
+}

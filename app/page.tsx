@@ -15,6 +15,7 @@ export default function Home() {
     min,
     max,
     unit,
+    switchUnitLabel,
     toggleUnit,
     addWater,
     resetWater,
@@ -27,16 +28,17 @@ export default function Home() {
   const [hasShownSuccess, setHasShownSuccess] = useState(false);
   const [tempGoal, setTempGoal] = useState(goal);
 
-  const fillPercentage = Math.min((total / goal) * 100, 100);
+  const bottleFill = Math.min((total / goal) * 100, 100);
+  const glassFill = (amount / max) * 100;
 
   useEffect(() => {
-    if (!hasShownSuccess && fillPercentage === 100 && total > 0) {
+    if (!hasShownSuccess && bottleFill === 100 && total > 0) {
       setShowSuccess(true);
       setHasShownSuccess(true);
       const timer = setTimeout(() => setShowSuccess(false), 3000);
       return () => clearTimeout(timer);
     }
-  }, [fillPercentage, total]);
+  }, [bottleFill, total]);
 
   const handleResetWater = () => {
     setHasShownSuccess(false);
@@ -49,6 +51,43 @@ export default function Home() {
     changeWaterGoal(tempGoal);
   }
 
+  const onGoalValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempGoal(Number(e.target.value));
+  }
+
+  const onGoalEditKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      saveGoal();
+    }
+  }
+
+  const onGoalClick = () => {
+    setTempGoal(goal);
+    setIsEditingGoal(true);
+  }
+
+  function InputGoal () {
+    return (
+      <input 
+        className="goal-input-active"
+        type="number" 
+        autoFocus 
+        value={tempGoal}
+        onChange={onGoalValueChange}
+        onBlur={saveGoal}
+        onKeyDown={onGoalEditKeyDown}
+      />
+    );
+  }
+
+  function GoalText() {
+    return (
+      <span className="goal-text-editable" onClick={onGoalClick}>
+        {goal}
+      </span>
+    );
+  }
+
   if (!isHydrated) {
     return <Skeleton />;
   }
@@ -57,53 +96,25 @@ export default function Home() {
     <div className="card">
       {showSuccess && <SuccessToast />}
 
-      <header className="top-actions-container">
-        <Link href="/history" className="action-btn"><HistoryIcon /> History</Link>
-        <button className="action-btn" onClick={toggleUnit}>{unit.toUpperCase()}</button>
-      </header>
-
-      <h2 className="title">Stay Hydrated 💧</h2>
-      <div className="goal-container">
-        <span>Goal: </span>
-        {isEditingGoal ? (
-          <input 
-            className="goal-input-active"
-            type="number" 
-            autoFocus 
-            value={tempGoal}
-            onChange={(e) => setTempGoal(Number(e.target.value))}
-            onBlur={saveGoal}
-            onKeyDown={(e) => e.key === 'Enter' && saveGoal()}
-          />
-        ) : (
-          <span 
-            className="goal-text-editable" 
-            onClick={() => {setTempGoal(goal); setIsEditingGoal(true)}}
-          >
-            {goal}
-          </span>
-        )}
-        <span> {unit}</span>
-      </div>
+      <header className="title">Stay Hydrated 💧</header>
       
-      {/* The Nalgene Bottle UI */}
+      {/* The Main water bottle */}
       <div className="bottle-container">
         <div className="bottle-cap"></div>
         <div className="bottle-body">
-          {/* Measurement marks on the side */}
           <div className="bottle-marks">
             <span>-</span><span>-</span><span>-</span><span>-</span>
           </div>
-          {/* The Water Fill */}
-          <div 
-            className="water-fill" 
-            style={{ height: `${fillPercentage}%` }}
-          ></div>
-          <div className="bottle-label">{total} {unit}</div>
+          <div className="water-fill"
+            style={{ height: `${bottleFill}%` }}>
+          </div>
+          <div className="bottle-label">
+            {total} / {isEditingGoal ? <InputGoal /> : <GoalText />} {unit}
+          </div>
         </div>
       </div>
 
-      <footer className="logger-container">
+      <div className="logger-container">
         <div className="glass-selector">
           {/* Decrease Button */}
           <button 
@@ -119,7 +130,7 @@ export default function Home() {
             <button className="mini-glass-btn" onClick={addWater}>
               <div 
                 className="mini-water-fill" 
-                style={{ height: `${(amount / max) * 100}%` }} 
+                style={{ height: `${glassFill}%` }} 
               />
             </button>
             
@@ -138,8 +149,19 @@ export default function Home() {
           </button>
         </div>
       
-        <button className="reset-btn" onClick={handleResetWater}>
-          Reset Progress
+      </div>
+
+      <footer className="bottom-actions-container">
+        <Link href="/history" className="action-btn">
+          <HistoryIcon /> History
+        </Link>
+
+        <button className="action-btn" onClick={handleResetWater}>
+          Reset
+        </button>
+        
+        <button className="action-btn" onClick={toggleUnit}>
+          {switchUnitLabel} 
         </button>
       </footer>
     </div>

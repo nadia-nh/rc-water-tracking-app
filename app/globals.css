@@ -23,7 +23,7 @@ body {
 /* 1. Main Card */
 .card {
   background: var(--card-bg);
-  padding: 2.5rem;
+  padding: 2.1rem;
   border-radius: 24px;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
   text-align: center;
@@ -35,8 +35,8 @@ body {
   position: relative;
 }
 
-/* 2. Top Action Row */
-.top-actions-container {
+/* 2. Bottom Action Row */
+.bottom-actions-container {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -58,12 +58,6 @@ body {
 }
 
 /* 3. Goal Area */
-.goal-container {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  height: 24px;
-}
-
 .goal-text-editable {
   color: var(--water-blue);
   font-weight: bold;
@@ -90,7 +84,7 @@ body {
 
 /* 4. Bottle & Water Fill */
 .bottle-container {
-  width: 120px;
+  width: 130px;
   position: relative;
 }
 
@@ -103,7 +97,7 @@ body {
 }
 
 .bottle-body {
-  width: 100px;
+  width: 130px;
   height: 200px;
   background: rgba(255, 255, 255, 0.05);
   border: 3px solid var(--border-muted);
@@ -145,7 +139,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 800;
   text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 }
@@ -240,16 +234,6 @@ body {
   color: var(--text-muted);
   font-size: 0.9rem;
   font-weight: 400;
-}
-
-.reset-btn {
-  margin-top: 1.5rem;
-  background: transparent;
-  color: #94a3b8;
-  border: none;
-  text-decoration: underline;
-  cursor: pointer;
-  margin-top: 0.5rem;
 }
 
 .success-toast {
